@@ -77,3 +77,32 @@ document.getElementById('showSliderBtn').addEventListener('click', function() {
   sliderContainer.style.display = 'flex'; 
   button.style.display = 'none'; // Скрыть кнопку после показа слайдера
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const buttons = document.querySelectorAll(".service-btn");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const serviceId = button.getAttribute("data-service");
+      const info = document.getElementById(`service-${serviceId}`);
+      const servicesSection = document.querySelector(".services");
+
+      // Закрываем все открытые блоки, кроме текущего
+      document.querySelectorAll(".service-info").forEach((otherInfo) => {
+        if (otherInfo !== info) {
+          otherInfo.classList.remove("open");
+        }
+      });
+
+      // Переключаем состояние текущего блока
+      info.classList.toggle("open");
+
+      // Увеличиваем или уменьшаем отступы секции
+      if (info.classList.contains("open")) {
+        servicesSection.classList.add("open");
+      } else {
+        servicesSection.classList.remove("open");
+      }
+    });
+  });
+});
