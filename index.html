@@ -6,10 +6,6 @@
   <title>Адвокат William</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-
-
-
-
 <body>
   <header class="header">
     <div class="container">
@@ -30,13 +26,31 @@
   </section>
 
   <section class="services">
-    <div class="container">
-      <h2>Услуги</h2>
-      <ul>
-        <li>Составление исков</li>
-        <li>Консультации</li>
-        <li>Выезд к клиенту</li>
-      </ul>
+    <h2>Наши Услуги</h2>
+    <div class="services-container">
+      <div class="service">
+        <button class="service-btn" data-service="1">Составление исков</button>
+        <div class="service-info" id="service-1">
+          <h5>> 100.000$</h5>
+          <p>Мы поможем вам грамотно составить исковое заявление и выступить на суде и проконсультируем вас по вашему случаю.</p>
+        </div>
+      </div>
+
+      <div class="service">
+        <button class="service-btn" data-service="2">Консультации</button>
+        <div class="service-info" id="service-2">
+          <h5>> 50.000$</h5>
+          <p>Мы дадим ответим на любой интересующий вас вопрос по закону или юриспруденции.</p>
+        </div>
+      </div>
+
+      <div class="service">
+        <button class="service-btn" data-service="3">Выезд к клиенту</button>
+        <div class="service-info" id="service-3">
+          <h5>> 25.000$</h5>
+          <p>Мы приедем по первому звонку и отпустим вас из рук сотрудников любого департамента.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -85,19 +99,19 @@
       <form id="contact-form" autocomplete="off">
         <div class="form-group">
           <label for="name">Ваше имя</label>
-          <input type="text" id="name" name="name" required autocomplete="off">
+          <input type="text" id="name" name="name" placeholder="Имя и Фамилия" required autocomplete="off">
         </div>
         <div class="form-group">
           <label for="phone">Ваш телефон</label>
-          <input type="tel" id="phone" name="phone" required autocomplete="off">
+          <input type="tel" id="phone" name="phone" placeholder="Номер телефона"  autocomplete="off">
         </div>
         <div class="form-group">
           <label for="email">Ваш email</label>
-          <input type="email" id="email" name="email" required autocomplete="off">
+          <input type="email" id="email" name="email" placeholder="discord + @gmail.com" autocomplete="off">
         </div>
         <div class="form-group">
           <label for="message">Ваше сообщение</label>
-          <textarea id="message" name="message" required autocomplete="off"></textarea>
+          <textarea id="message" name="message" placeholder="Кратко опишите суть вашего обращения" required autocomplete="off"></textarea>
         </div>
         <button type="submit">Отправить</button>
       </form>
