@@ -2,7 +2,7 @@ document.getElementById("contact-form").addEventListener("submit", async functio
   event.preventDefault();
 
   const token = "7796024449:AAEaMCSybvc_-uFwE1M2jhNLtl_PHLprCjY";
-  const chatId = "729406890";
+  const chatIds = ["729406890", "2028666270"]; // Укажите идентификаторы получателей
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
   const name = document.getElementById("name").value;
@@ -19,24 +19,28 @@ document.getElementById("contact-form").addEventListener("submit", async functio
   `;
 
   try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text }),
-    });
+    // Отправляем сообщение каждому получателю
+    for (const chatId of chatIds) {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: chatId, text }),
+      });
 
-    if (!response.ok) {
-      throw new Error(`Ошибка: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+      }
     }
 
-    alert("Сообщение успешно отправлено!");
-    console.log("Успешно:", await response.json());
+    alert("Сообщение успешно отправлено двум получателям!");
+    console.log("Успешно отправлено!");
     document.getElementById("contact-form").reset();
   } catch (error) {
     alert("Не удалось отправить сообщение. Проверьте настройки.");
     console.error("Ошибка отправки:", error);
   }
 });
+
 
 // Функционал слайдера
 document.addEventListener('DOMContentLoaded', () => {
