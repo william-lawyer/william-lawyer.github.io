@@ -880,6 +880,62 @@
 
       tg.expand();
     };
+    // Функция для загрузки событий с сервера
+async function loadEvents() {
+    try {
+        const response = await fetch('https://sssueta-server.onrender.com');
+        const events = await response.json();
+        
+        const eventList = document.querySelector('.event-list');
+        eventList.innerHTML = ''; // Очищаем существующие события
+        
+        // Добавляем каждое событие в список
+        events.forEach(event => {
+            const eventItem = document.createElement('div');
+            eventItem.className = 'event-item';
+            eventItem.innerHTML = `
+                <div class="event-image"></div>
+                <div class="event-details">
+                    <div class="event-header">
+                        <div class="event-title">${event.name}</div>
+                        <div class="event-price">${event.price}$</div>
+                    </div>
+                    <div class="event-date">Дата проведения: ${event.date}</div>
+                    <div class="event-address-container">
+                        <div class="event-address">
+                            <div class="address-label">Адрес:</div>
+                            <a class="address-text" href="#" target="_blank">${event.address}</a>
+                        </div>
+                        <div class="copy-icon-container">
+                            <img class="copy-icon" src="./icons/copy.svg" />
+                        </div>
+                    </div>
+                </div>
+                <div class="buy-ticket-button">
+                    <div class="buy-ticket-text">Купить билет</div>
+                </div>
+            `;
+            
+            eventList.appendChild(eventItem);
+        });
+        
+        // Повторно инициализируем обработчики копирования для новых элементов
+        initCopyHandlers();
+    } catch (error) {
+        console.error('Ошибка загрузки событий:', error);
+    }
+}
+
+// Вызываем загрузку событий при загрузке страницы
+window.onload = () => {
+    // ... ваш существующий код ...
+    
+    // Добавляем загрузку событий
+    loadEvents();
+    
+    // Можно добавить автоматическое обновление каждые X секунд
+    setInterval(loadEvents, 30000); // Обновлять каждые 30 секунд
+};
   </script>
 </body>
 </html>
