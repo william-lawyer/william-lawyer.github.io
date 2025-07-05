@@ -393,7 +393,7 @@
     <div class="bottom-nav">
       <div class="nav-item">
         <div class="icon-container">
-          <a href="#"><img class="icon icon-user" src="./icons/user.svg" /></a>
+          <a  href="#"><img class="icon icon-user" src="./icons/user.svg" /></a>
         </div>
       </div>
       <div class="nav-item">
@@ -421,7 +421,7 @@
             <div class="event-address-container">
               <div class="event-address">
                 <div class="address-label">Адрес:</div>
-                <a class="address-text" href="geo:0,0?q=Рочдельская улица, 15с35" target="_blank">Рочдельская улица, 15с35</a>
+                <a class="address-text" href="#" target="_blank">Рочдельская улица, 15с35</a>
               </div>
               <div class="copy-icon-container">
                 <img class="copy-icon" src="./icons/copy.svg" />
@@ -443,7 +443,7 @@
             <div class="event-address-container">
               <div class="event-address">
                 <div class="address-label">Адрес:</div>
-                <a class="address-text" href="geo:0,0?q=Рочдельская улица, 15с35" target="_blank">Рочдельская улица, 15с35</a>
+                <a class="address-text" href="#" target="_blank">Рочдельская улица, 15с35</a>
               </div>
               <div class="copy-icon-container">
                 <img class="copy-icon" src="./icons/copy.svg" />
@@ -495,10 +495,12 @@
         }
       });
 
-      // Copy address to clipboard with notification
+      // Copy address to clipboard with notification and open in maps
       document.querySelectorAll('.event-address-container').forEach(container => {
         const addressElement = container.querySelector('.address-text');
         const addressText = addressElement.textContent;
+        const encodedAddress = encodeURIComponent(addressText);
+        addressElement.href = `https://www.google.com/maps/search/${encodedAddress}`;
 
         const copyContainer = container.querySelector('.copy-icon-container');
         copyContainer.addEventListener('click', () => {
