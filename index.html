@@ -421,7 +421,7 @@
             <div class="event-address-container">
               <div class="event-address">
                 <div class="address-label">Адрес:</div>
-                <a class="address-text" href="#" target="_blank">Рочдельская улица, 15с35</a>
+                <a class="address-text" href="geo:0,0?q=Рочдельская улица, 15с35" target="_blank">Рочдельская улица, 15с35</a>
               </div>
               <div class="copy-icon-container">
                 <img class="copy-icon" src="./icons/copy.svg" />
@@ -443,7 +443,7 @@
             <div class="event-address-container">
               <div class="event-address">
                 <div class="address-label">Адрес:</div>
-                <a class="address-text" href="#" target="_blank">Рочдельская улица, 15с35</a>
+                <a class="address-text" href="geo:0,0?q=Рочдельская улица, 15с35" target="_blank">Рочдельская улица, 15с35</a>
               </div>
               <div class="copy-icon-container">
                 <img class="copy-icon" src="./icons/copy.svg" />
@@ -495,12 +495,10 @@
         }
       });
 
-      // Copy address to clipboard with notification and open in maps
+      // Copy address to clipboard with notification
       document.querySelectorAll('.event-address-container').forEach(container => {
         const addressElement = container.querySelector('.address-text');
         const addressText = addressElement.textContent;
-        const encodedAddress = encodeURIComponent(addressText);
-        addressElement.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
 
         const copyContainer = container.querySelector('.copy-icon-container');
         copyContainer.addEventListener('click', () => {
