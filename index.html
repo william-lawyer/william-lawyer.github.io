@@ -149,7 +149,7 @@
       width: 100%;
       background: #151516;
       border-radius: 40px 40px 0 0;
-      padding: 24px 24px 100px 24px; /* Add extra bottom padding */
+      padding: 24px 24px 100px 24px;
       max-height: 80vh;
       overflow-y: auto;
       transform: translateY(100%);
@@ -430,7 +430,7 @@
     .pay-row {
       display: flex;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       align-self: stretch;
       flex-shrink: 0;
@@ -444,7 +444,6 @@
       align-items: flex-start;
       justify-content: flex-start;
       flex-shrink: 0;
-      width: 67px;
       position: relative;
     }
 
@@ -459,14 +458,43 @@
       align-self: stretch;
     }
 
-    .pay-amount {
+    .pay-amount-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+.pay-amount-input,
+.receive-amount-input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 27px;
+  font-weight: 500;
+  width: 200px;
+  outline: none;
+}
+
+.pay-amount-container,
+.receive-amount-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pay-amount-input::placeholder,
+.receive-amount-input::placeholder {
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+    .pay-amount-symbol {
       color: #ffffff;
-      text-align: left;
       font-family: "Inter-Medium", sans-serif;
       font-size: 27px;
       font-weight: 500;
-      position: relative;
-      width: 260px;
     }
 
     .circle-pay {
@@ -492,7 +520,7 @@
     .receive-row {
       display: flex;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       align-self: stretch;
       flex-shrink: 0;
@@ -506,7 +534,6 @@
       align-items: flex-start;
       justify-content: flex-start;
       flex-shrink: 0;
-      width: 44px;
       position: relative;
     }
 
@@ -521,14 +548,34 @@
       align-self: stretch;
     }
 
-    .receive-amount {
+    .receive-amount-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .receive-amount-input {
+      background: transparent;
+      border: none;
       color: #ffffff;
       text-align: left;
       font-family: "Inter-Medium", sans-serif;
       font-size: 27px;
       font-weight: 500;
-      position: relative;
-      width: 260px;
+      width: 200px;
+      outline: none;
+    }
+
+    .receive-amount-input::placeholder {
+      color: #ffffff;
+      opacity: 0.5;
+    }
+
+    .receive-amount-symbol {
+      color: #ffffff;
+      font-family: "Inter-Medium", sans-serif;
+      font-size: 27px;
+      font-weight: 500;
     }
 
     .circle-receive {
@@ -700,25 +747,29 @@
           <div class="balance-amount">1000$</div>
         </div>
         <div class="transaction-section">
-          <div class="pay-row">
-            <div class="pay-details">
-              <div class="pay-label">Заплачу</div>
-              <div class="pay-amount">1000 ₽</div>
-            </div>
-            <div class="circle-pay"></div>
-          </div>
-          <div class="divider"></div>
-          <div class="receive-row">
-            <div class="receive-details">
-              <div class="receive-label">Получу</div>
-              <div class="receive-amount">1100</div>
-            </div>
-            <div class="circle-receive"></div>
-          </div>
-          <div class="sort-icon-container">
-            <img class="sort-icon" src="./icons/sort.svg" />
-          </div>
-        </div>
+  <div class="pay-row">
+    <div class="pay-details">
+      <div class="pay-label">Заплачу</div>
+      <div class="pay-amount-container">
+        <input type="text" class="pay-amount-input" value="1000 ₽" placeholder="0" />
+      </div>
+    </div>
+    <div class="circle-pay"></div>
+  </div>
+  <div class="divider"></div>
+  <div class="receive-row">
+    <div class="receive-details">
+      <div class="receive-label">Получу</div>
+      <div class="receive-amount-container">
+        <input type="text" class="receive-amount-input" value="1100 ₽" placeholder="0" />
+      </div>
+    </div>
+    <div class="circle-receive"></div>
+  </div>
+  <div class="sort-icon-container">
+    <img class="sort-icon" src="./icons/sort.svg" />
+  </div>
+</div>
         <div class="top-up-button">
           <div class="top-up-text">Пополнить баланс</div>
         </div>
@@ -729,6 +780,43 @@
   </div>
 
   <script>
+    function formatNumber(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+// Обработка ввода для pay-amount-input и receive-amount-input
+function setupInputFormatting(input) {
+  input.addEventListener('input', function(e) {
+    // Удаляем всё, кроме цифр
+    let value = e.target.value.replace(/[^0-9]/g, '');
+    // Форматируем число и добавляем символ рубля
+    if (value) {
+      e.target.value = formatNumber(value) + ' ₽';
+    } else {
+      e.target.value = '';
+    }
+  });
+
+  // Предотвращаем некорректное удаление
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Backspace' || e.key === 'Delete') {
+      let value = e.target.value.replace(/[^0-9]/g, '');
+      if (value.length === 0) {
+        e.target.value = '';
+      }
+    }
+  });
+}
+
+// Применяем форматирование к обоим полям ввода
+const payInput = document.querySelector('.pay-amount-input');
+const receiveInput = document.querySelector('.receive-amount-input');
+setupInputFormatting(payInput);
+setupInputFormatting(receiveInput);
+
+// Инициализация начальных значений с форматированием
+payInput.value = formatNumber(payInput.value.replace(/[^0-9]/g, '')) + ' ₽' || '';
+receiveInput.value = formatNumber(receiveInput.value.replace(/[^0-9]/g, '')) + ' ₽' || '';
     window.onload = () => {
       const tg = window.Telegram.WebApp;
 
