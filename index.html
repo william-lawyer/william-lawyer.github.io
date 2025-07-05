@@ -143,11 +143,10 @@
       bottom: 0;
       left: 0;
       right: 0;
-      max-width: 320px;
-      margin: auto;
+      width: 100%;
       background: #151516;
       border-radius: 40px 40px 0 0;
-      padding: 20px;
+      padding: 24px;
       max-height: 80vh;
       overflow-y: auto;
       transform: translateY(100%);
@@ -168,39 +167,42 @@
     .event-list {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 32px;
       align-items: center;
       justify-content: flex-start;
-      padding: 12px;
+      padding: 16px;
     }
 
     .event-item {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 32px;
       align-items: center;
       justify-content: flex-start;
       flex-shrink: 0;
       position: relative;
+      width: 100%;
     }
 
     .event-image {
       background: #d9d9d9;
-      border-radius: 20px;
+      border-radius: 24px;
       flex-shrink: 0;
-      width: 264px;
-      height: 264px;
+      width: 100%;
+      max-width: 400px;
+      height: 300px;
       position: relative;
     }
 
     .event-details {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
       align-items: flex-start;
       justify-content: flex-start;
       flex-shrink: 0;
       position: relative;
+      width: 100%;
     }
 
     .event-header {
@@ -217,7 +219,7 @@
       color: #ffffff;
       text-align: left;
       font-family: "Inter-Medium", sans-serif;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 500;
       position: relative;
     }
@@ -226,7 +228,7 @@
       color: #ffffff;
       text-align: right;
       font-family: "Inter-Medium", sans-serif;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 500;
       position: relative;
     }
@@ -235,7 +237,7 @@
       color: #ffffffbe;
       text-align: left;
       font-family: "Inter-Light", sans-serif;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 300;
       opacity: 0.7;
       position: relative;
@@ -244,7 +246,7 @@
     .event-address-container {
       display: flex;
       flex-direction: row;
-      gap: 8px;
+      gap: 12px;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
@@ -254,7 +256,7 @@
     .event-address {
       display: flex;
       flex-direction: row;
-      gap: 4px;
+      gap: 6px;
       align-items: center;
       justify-content: flex-start;
       flex-shrink: 0;
@@ -265,7 +267,7 @@
       color: #ffffffbe;
       text-align: left;
       font-family: "Inter-Light", sans-serif;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 300;
       opacity: 0.7;
       position: relative;
@@ -275,7 +277,7 @@
       color: #ffffffbe;
       text-align: left;
       font-family: "Inter-Light", sans-serif;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 300;
       text-decoration: underline;
       opacity: 0.7;
@@ -284,8 +286,8 @@
 
     .copy-icon-container {
       flex-shrink: 0;
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       position: relative;
       overflow: hidden;
       cursor: pointer;
@@ -295,26 +297,47 @@
     .copy-icon {
       height: auto;
       position: absolute;
-      left: 1.17px;
-      top: 1.17px;
+      left: 1.5px;
+      top: 1.5px;
       overflow: visible;
       user-select: none;
     }
 
+    .copy-feedback {
+      display: none;
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      white-space: nowrap;
+      z-index: 1001;
+    }
+
+    .copy-feedback.show {
+      display: block;
+    }
 
     .buy-ticket-button {
       background: linear-gradient(95.35deg, rgba(85, 65, 217, 1) 0%, rgba(120, 100, 255, 1) 100%);
-      border-radius: 15px;
+      border-radius: 18px;
       color: #ffffff;
-      padding: 16px 24px;
+      padding: 20px 28px;
       display: flex;
       flex-direction: row;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
       justify-content: center;
       align-self: stretch;
       flex-shrink: 0;
       position: relative;
+      font-size: 18px;
+      font-weight: 500;
     }
 
     @media screen and (max-width: 768px) {
@@ -465,7 +488,7 @@
         }
       });
 
-      // Copy address to clipboard
+      // Copy address to clipboard with tooltip
       document.querySelectorAll('.copy-icon-container').forEach(container => {
         container.addEventListener('click', () => {
           const addressText = container.previousElementSibling.querySelector('.address-text').textContent;
