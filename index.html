@@ -358,18 +358,16 @@
       box-sizing: border-box;
     }
 
-.wallet-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: 100%; /* Убираем ограничение max-width: 300px */
-  position: relative;
-  margin: 0 auto;
-  padding: 0 16px; /* Добавляем отступы для мобильных устройств */
-}
+    .wallet-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      align-items: center;
+      justify-content: flex-start;
+      width: 300px;
+      position: relative;
+      margin: 0 auto;
+    }
 
     .wallet-image {
       flex-shrink: 0;
@@ -412,21 +410,24 @@
       align-self: stretch;
     }
 
-.transaction-section {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  border-style: solid;
-  border-color: rgba(255, 255, 255, 0.1);
-  border-width: 1px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%; /* Устанавливаем ширину 100% */
-  box-sizing: border-box;
-}
+
+
+    .transaction-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.1);
+      border-width: 1px;
+      padding: 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-start;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+    }
 
     .pay-row {
       display: flex;
@@ -459,28 +460,23 @@
       align-self: stretch;
     }
 
-.pay-amount-container,
-.receive-amount-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%; /* Убедимся, что контейнер занимает всю ширину */
-}
+    .pay-amount-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-.pay-amount-input,
-.receive-amount-input {
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  text-align: left;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 27px;
-  font-weight: 500;
-  width: 100%; /* Заменяем width: 200px на 100% */
-  outline: none;
-}
-
-
+    .pay-amount-input {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Medium", sans-serif;
+      font-size: 27px;
+      font-weight: 500;
+      width: 200px;
+      outline: none;
+    }
 
     .pay-amount-symbol {
       color: #ffffff;
@@ -646,27 +642,7 @@
         background: rgba(255, 255, 255, 0.05);
         border-radius: 20px;      
       }
-      @media screen and (max-width: 768px) {
-  .pay-amount-input,
-  .receive-amount-input {
-    font-size: 24px; /* Уменьшаем размер шрифта для мобильных */
-  }
-
-  .pay-amount-container,
-  .receive-amount-container {
-    flex-wrap: nowrap; /* Запрещаем перенос элементов */
-  }
-
-  .wallet-container {
-    padding: 0 10px; /* Уменьшаем отступы */
-  }
-
-  .transaction-section {
-    padding: 15px; /* Уменьшаем padding для мобильных */
-  }
-}
     }
-    
   </style>
 </head>
 <body>
@@ -703,7 +679,7 @@
     </div>
 
     <div class="events-panel" id="appsPanel">
-      <div class="event-list">
+      <div class="event-list" id="eventList">
         <div class="event-item">
           <div class="event-image"></div>
           <div class="event-details">
@@ -774,7 +750,6 @@
               <div class="receive-label">Получу</div>
               <div class="receive-amount-container">
                 <input type="number" class="receive-amount-input" value="1100" min="0" step="1" />
-
               </div>
             </div>
             <div class="circle-receive"></div>
@@ -842,7 +817,7 @@
       });
 
       // Copy address to clipboard with notification and open in maps
-      document.querySelectorAll('.event-address-container').forEach(container => {
+      function setupAddressCopy(container) {
         const addressElement = container.querySelector('.address-text');
         const addressText = addressElement.textContent;
         const encodedAddress = encodeURIComponent(addressText);
@@ -860,6 +835,47 @@
             console.error('Failed to copy: ', err);
           });
         });
+      }
+
+      document.querySelectorAll('.event-address-container').forEach(setupAddressCopy);
+
+      // Handle new event creation via Telegram bot command
+      tg.onEvent('web_app_data', (eventData) => {
+        try {
+          const data = JSON.parse(eventData.data);
+          if (data.command === '/createevent' && data.title && data.price && data.date && data.address) {
+            const eventList = document.querySelector('#eventList');
+            const newEvent = document.createElement('div');
+            newEvent.className = 'event-item';
+            newEvent.innerHTML = `
+              <div class="event-image"></div>
+              <div class="event-details">
+                <div class="event-header">
+                  <div class="event-title">${data.title}</div>
+                  <div class="event-price">${data.price}$</div>
+                </div>
+                <div class="event-date">Дата проведения: ${data.date}</div>
+                <div class="event-address-container">
+                  <div class="event-address">
+                    <div class="address-label">Адрес:</div>
+                    <a class="address-text" href="#" target="_blank">${data.address}</a>
+                  </div>
+                  <div class="copy-icon-container">
+                    <img class="copy-icon" src="./icons/copy.svg" />
+                  </div>
+                </div>
+              </div>
+              <div class="buy-ticket-button">
+                <div class="buy-ticket-text">Купить билет</div>
+              </div>
+            `;
+            eventList.prepend(newEvent); // Add new event at the top
+            setupAddressCopy(newEvent.querySelector('.event-address-container')); // Setup copy functionality for new event
+            appsPanel.classList.add('open'); // Open events panel to show new event
+          }
+        } catch (err) {
+          console.error('Failed to parse event data: ', err);
+        }
       });
 
       tg.expand();
