@@ -166,6 +166,7 @@
     .events-panel.open,
     .wallet-panel.open {
       transform: translateY(0);
+      z-index: 1000;
     }
 
     /* Disable scrolling specifically for wallet-panel */
@@ -863,7 +864,7 @@
           const walletPanelRect = walletPanel.getBoundingClientRect();
 
           // Calculate the desired scroll position (input slightly above center)
-          const desiredInputTop = viewportHeight * 0.4; // 40% from top
+          const desiredInputTop = viewportHeight * 0.65; // 40% from top
           const scrollOffset = inputRect.top - desiredInputTop + walletPanelRect.top;
 
           // Adjust the wallet panel's position upward
