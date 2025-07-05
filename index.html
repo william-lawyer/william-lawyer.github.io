@@ -134,11 +134,14 @@
 
     /* Slide-up panel styles */
     .events-panel,
-    .events-panel * {
+    .events-panel *,
+    .wallet-panel,
+    .wallet-panel * {
       box-sizing: border-box;
     }
 
-    .events-panel {
+    .events-panel,
+    .wallet-panel {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -156,15 +159,18 @@
       -ms-overflow-style: none;
     }
 
-    .events-panel::-webkit-scrollbar {
+    .events-panel::-webkit-scrollbar,
+    .wallet-panel::-webkit-scrollbar {
       display: none;
     }
 
-    .events-panel.open {
+    .events-panel.open,
+    .wallet-panel.open {
       transform: translateY(0);
     }
 
-    .event-list {
+    .event-list,
+    .wallet-content {
       display: flex;
       flex-direction: column;
       gap: 32px;
@@ -347,6 +353,236 @@
       opacity: 1;
     }
 
+    /* Wallet panel styles */
+    .wallet-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      justify-content: flex-start;
+      align-self: stretch;
+      position: relative;
+    }
+
+    .wallet-image {
+      width: 125%;
+      margin-bottom: -80px;
+      margin-top: -40px;
+    }
+
+    .balance-container {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      align-items: center;
+      justify-content: center;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+      margin-bottom: 14px
+    }
+
+    .balance-label {
+      color: #ffffff;
+      text-align: center;
+      font-family: "Inter-Light", sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      opacity: 0.7;
+      position: relative;
+      align-self: stretch;
+    }
+
+    .balance-amount {
+      color: #ffffff;
+      text-align: center;
+      font-family: "Inter-Regular", sans-serif;
+      font-size: 35px;
+      font-weight: 400;
+      position: relative;
+      align-self: stretch;
+    }
+
+    .transactions-container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.1);
+      border-width: 1px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      align-items: center;
+      justify-content: flex-start;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .outgoing-transaction {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .outgoing-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      width: 67px;
+      margin-top: 5px;
+      margin-left: 5px;
+      position: relative;
+    }
+
+    .outgoing-label {
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Regular", sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      opacity: 0.7;
+      position: relative;
+      align-self: stretch;
+    }
+
+    .outgoing-amount {
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Medium", sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      position: relative;
+      width: 300px;
+      margin-bottom: -15px;
+    }
+
+    .outgoing-icon {
+      border-radius: 50%;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      position: relative;
+    }
+
+    .divider-line {
+      margin-top: -1px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.1);
+      border-width: 1px 0 0 0;
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 300px;
+      height: 0px;
+      position: relative;
+    }
+
+    .incoming-transaction {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .incoming-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      width: 44px;
+      position: relative;
+      margin-bottom: 5px;
+      margin-left: 5px;
+    }
+
+    .incoming-label {
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Regular", sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      opacity: 0.7;
+      position: relative;
+      align-self: stretch;
+      margin-top: -15px;
+    }
+
+    .incoming-amount {
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Medium", sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      position: relative;
+      width: 300px;
+    }
+
+    .incoming-icon {
+      border-radius: 50%;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      position: relative;
+    }
+
+    .sort-icon-container {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 69px;
+      overflow: hidden;
+      backdrop-filter: blur(2px);
+    }
+
+    .sort-icon {
+      height: auto;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      overflow: visible;
+    }
+
+    .top-up-button-container {
+      background: linear-gradient(95.35deg, rgba(85, 65, 217, 1) 0%, rgba(120, 100, 255, 1) 100%);
+      border-radius: 15px;
+      padding: 23px 24px;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .top-up-button-text {
+      color: #ffffff;
+      text-align: center;
+      font-family: "Inter-SemiBold", sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      position: relative;
+    }
+
+    /* Adaptive styles for wallet-content on mobile phones */
     @media screen and (max-width: 768px) {
       .app-container {
         display: flex;
@@ -372,6 +608,71 @@
         background: rgba(255, 255, 255, 0.05);
         border-radius: 20px;      
       }
+
+      .wallet-content {
+        gap: 16px; /* Reduced gap for mobile */
+        padding: 12px; /* Adjusted padding for smaller screens */
+      }
+
+
+
+      .balance-container {
+        gap: 2px; /* Tighter spacing */
+      }
+
+      .balance-label {
+        font-size: 14px; /* Smaller font for mobile */
+      }
+
+      .balance-amount {
+        font-size: 28px; /* Slightly smaller for better fit */
+      }
+
+      .transactions-container {
+        padding: 12px; /* Reduced padding */
+        gap: 20px; /* Reduced gap between transactions */
+      }
+
+      .outgoing-transaction,
+      .incoming-transaction {
+        flex-direction: row;
+        align-items: center; /* Center items vertically */
+      }
+
+      .outgoing-details,
+      .incoming-details {
+        flex: 1; /* Allow details to take available space */
+        width: auto; /* Remove fixed width for flexibility */
+      }
+
+      .outgoing-amount,
+      .incoming-amount {
+        font-size: 24px; /* Smaller font for mobile */
+        width: auto; /* Remove fixed width */
+        margin-bottom: 0; /* Reset negative margin */
+      }
+
+      .outgoing-label,
+      .incoming-label {
+        font-size: 14px; /* Smaller font for mobile */
+        margin-top: 0; /* Reset negative margin */
+      }
+
+      .divider-line {
+        max-width: 95%; /* Full width for mobile */
+      }
+
+      .sort-icon-container {
+        top: 73px; /* Adjusted position for smaller layout */
+      }
+
+      .top-up-button-container {
+        padding: 20px 20px; /* Reduced padding for mobile */
+      }
+
+      .top-up-button-text {
+        font-size: 14px; /* Smaller font for mobile */
+      }
     }
   </style>
 </head>
@@ -393,7 +694,7 @@
     <div class="bottom-nav">
       <div class="nav-item">
         <div class="icon-container">
-          <a  href="#"><img class="icon icon-user" src="./icons/user.svg" /></a>
+          <a href="#"><img class="icon icon-user" src="./icons/user.svg" /></a>
         </div>
       </div>
       <div class="nav-item">
@@ -403,7 +704,7 @@
       </div>
       <div class="nav-item">
         <div class="icon-container">
-          <a href="#"><img class="icon icon-wallet" src="./icons/wallet.svg" /></a>
+          <a href="#" class="wallet-link"><img class="icon icon-wallet" src="./icons/wallet.svg" /></a>
         </div>
       </div>
     </div>
@@ -457,6 +758,39 @@
       </div>
     </div>
 
+    <div class="wallet-panel" id="walletPanel">
+      <div class="wallet-content">
+        <img class="wallet-image" src="./icons/card.png" />
+        <div class="balance-container">
+          <div class="balance-label">Баланс:</div>
+          <div class="balance-amount">1000$</div>
+        </div>
+        <div class="transactions-container">
+          <div class="outgoing-transaction">
+            <div class="outgoing-details">
+              <div class="outgoing-label">Заплачу</div>
+              <div class="outgoing-amount">1000 ₽</div>
+            </div>
+            <div class="outgoing-icon"></div>
+          </div>
+          <div class="divider-line"></div>
+          <div class="incoming-transaction">
+            <div class="incoming-details">
+              <div class="incoming-label">Получу</div>
+              <div class="incoming-amount">1100</div>
+            </div>
+            <div class="incoming-icon"></div>
+          </div>
+          <div class="sort-icon-container">
+            <img class="sort-icon" src="./icons/sort.svg" />
+          </div>
+        </div>
+        <div class="top-up-button-container">
+          <div class="top-up-button-text">Пополнить баланс</div>
+        </div>
+      </div>
+    </div>
+
     <div class="notification" id="copyNotification">Адрес скопирован!</div>
   </div>
 
@@ -479,19 +813,33 @@
       const formattedDate = now.toLocaleDateString('ru-RU', options);
       document.querySelector('.registration-date').textContent = `Дата регистрации: ${formattedDate}`;
 
-      // Slide panel functionality
+      // Slide panel functionality for events
       const appsLink = document.querySelector('.apps-link');
       const appsPanel = document.querySelector('#appsPanel');
 
       appsLink.addEventListener('click', (e) => {
         e.preventDefault();
         appsPanel.classList.toggle('open');
+        walletPanel.classList.remove('open'); // Close wallet panel if open
       });
 
-      // Close panel when clicking outside
+      // Slide panel functionality for wallet
+      const walletLink = document.querySelector('.wallet-link');
+      const walletPanel = document.querySelector('#walletPanel');
+
+      walletLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        walletPanel.classList.toggle('open');
+        appsPanel.classList.remove('open'); // Close events panel if open
+      });
+
+      // Close panels when clicking outside
       document.addEventListener('click', (e) => {
         if (!appsPanel.contains(e.target) && !appsLink.contains(e.target)) {
           appsPanel.classList.remove('open');
+        }
+        if (!walletPanel.contains(e.target) && !walletLink.contains(e.target)) {
+          walletPanel.classList.remove('open');
         }
       });
 
@@ -500,7 +848,7 @@
         const addressElement = container.querySelector('.address-text');
         const addressText = addressElement.textContent;
         const encodedAddress = encodeURIComponent(addressText);
-        addressElement.href = `https://www.google.com/maps/search/${encodedAddress}`;
+        addressElement.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
 
         const copyContainer = container.querySelector('.copy-icon-container');
         copyContainer.addEventListener('click', () => {
