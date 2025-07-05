@@ -151,6 +151,7 @@
       border-radius: 40px 40px 0 0;
       padding: 24px;
       max-height: 80vh;
+      overflow-y: auto;
       transform: translateY(100%);
       transition: transform 0.3s ease-in-out;
       z-index: 1000;
@@ -168,16 +169,7 @@
       transform: translateY(0);
     }
 
-    .events-panel {
-      overflow-y: auto;
-    }
-
-    .wallet-panel {
-      overflow-y: hidden;
-    }
-
-    .event-list,
-    .wallet-content {
+    .event-list {
       display: flex;
       flex-direction: column;
       gap: 32px;
@@ -361,25 +353,35 @@
     }
 
     /* Wallet panel styles */
-    .wallet-content {
+    .wallet-container,
+    .wallet-container * {
+      box-sizing: border-box;
+    }
+
+    .wallet-container {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 30px;
       align-items: center;
       justify-content: flex-start;
-      align-self: stretch;
+      width: 300px;
       position: relative;
+      margin: 0 auto;
     }
 
     .wallet-image {
-        width: 130%;
-        margin-bottom: -90px;
+      flex-shrink: 0;
+      width: 130%;
+      height: 130%;
+      position: relative;
+      object-fit: fill;
+      margin-bottom: -88px;
     }
 
-    .balance-container {
+    .balance-section {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 0px;
       align-items: center;
       justify-content: center;
       align-self: stretch;
@@ -402,20 +404,22 @@
       color: #ffffff;
       text-align: center;
       font-family: "Inter-Regular", sans-serif;
-      font-size: 35px;
+      font-size: 30px;
       font-weight: 400;
       position: relative;
       align-self: stretch;
     }
 
-    .transactions-container {
+    .transaction-section {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 16px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.1);
+      border-width: 1px;
+      padding: 20px 20px;
       display: flex;
       flex-direction: column;
-      gap: 25px;
+      gap: 8px;
       align-items: center;
       justify-content: flex-start;
       align-self: stretch;
@@ -423,7 +427,7 @@
       position: relative;
     }
 
-    .outgoing-transaction {
+    .pay-row {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
@@ -433,7 +437,7 @@
       position: relative;
     }
 
-    .outgoing-details {
+    .pay-details {
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -444,7 +448,7 @@
       position: relative;
     }
 
-    .outgoing-label {
+    .pay-label {
       color: #ffffff;
       text-align: left;
       font-family: "Inter-Regular", sans-serif;
@@ -455,21 +459,18 @@
       align-self: stretch;
     }
 
-    .outgoing-amount-input {
+    .pay-amount {
       color: #ffffff;
       text-align: left;
       font-family: "Inter-Medium", sans-serif;
-      font-size: 28px;
+      font-size: 27px;
       font-weight: 500;
       position: relative;
-      width: 300px;
-      margin-bottom: -15px;
-      background: transparent;
-      border: none;
-      outline: none;
+      width: 260px;
     }
 
-    .outgoing-icon {
+    .circle-pay {
+      background: rgba(217, 217, 217, 0);
       border-radius: 50%;
       flex-shrink: 0;
       width: 20px;
@@ -477,19 +478,18 @@
       position: relative;
     }
 
-    .divider-line {
+    .divider {
       margin-top: -1px;
       border-style: solid;
       border-color: rgba(255, 255, 255, 0.1);
       border-width: 1px 0 0 0;
       flex-shrink: 0;
-      width: 100%;
-      max-width: 300px;
+      width: 260px;
       height: 0px;
       position: relative;
     }
 
-    .incoming-transaction {
+    .receive-row {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
@@ -499,7 +499,7 @@
       position: relative;
     }
 
-    .incoming-details {
+    .receive-details {
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -510,7 +510,7 @@
       position: relative;
     }
 
-    .incoming-label {
+    .receive-label {
       color: #ffffff;
       text-align: left;
       font-family: "Inter-Regular", sans-serif;
@@ -519,23 +519,20 @@
       opacity: 0.7;
       position: relative;
       align-self: stretch;
-      margin-top: -15px;
     }
 
-    .incoming-amount-input {
+    .receive-amount {
       color: #ffffff;
       text-align: left;
       font-family: "Inter-Medium", sans-serif;
-      font-size: 28px;
+      font-size: 27px;
       font-weight: 500;
       position: relative;
-      width: 300px;
-      background: transparent;
-      border: none;
-      outline: none;
+      width: 260px;
     }
 
-    .incoming-icon {
+    .circle-receive {
+      background: rgba(217, 217, 217, 0);
       border-radius: 50%;
       flex-shrink: 0;
       width: 20px;
@@ -548,9 +545,8 @@
       width: 24px;
       height: 24px;
       position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 69px;
+      left: 140px;
+      top: 70px;
       overflow: hidden;
       backdrop-filter: blur(2px);
     }
@@ -563,10 +559,10 @@
       overflow: visible;
     }
 
-    .top-up-button-container {
-      background: linear-gradient(95.35deg, rgba(85, 65, 217, 1) 0%, rgba(120, 100, 255, 1) 100%);
+    .top-up-button {
+      background-color: #5541d9;
       border-radius: 15px;
-      padding: 23px 24px;
+      padding: 22px 24px;
       display: flex;
       flex-direction: row;
       gap: 10px;
@@ -577,11 +573,11 @@
       position: relative;
     }
 
-    .top-up-button-text {
+    .top-up-text {
       color: #ffffff;
-      text-align: center;
+      text-align: left;
       font-family: "Inter-SemiBold", sans-serif;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 600;
       position: relative;
     }
@@ -697,34 +693,34 @@
     </div>
 
     <div class="wallet-panel" id="walletPanel">
-      <div class="wallet-content">
+      <div class="wallet-container">
         <img class="wallet-image" src="./icons/card.png" />
-        <div class="balance-container">
+        <div class="balance-section">
           <div class="balance-label">Баланс:</div>
           <div class="balance-amount">1000$</div>
         </div>
-        <div class="transactions-container">
-          <div class="outgoing-transaction">
-            <div class="outgoing-details">
-              <div class="outgoing-label">Заплачу</div>
-              <input type="number" class="outgoing-amount-input" value="1000" />
+        <div class="transaction-section">
+          <div class="pay-row">
+            <div class="pay-details">
+              <div class="pay-label">Заплачу</div>
+              <div class="pay-amount">1000 ₽</div>
             </div>
-            <div class="outgoing-icon"></div>
+            <div class="circle-pay"></div>
           </div>
-          <div class="divider-line"></div>
-          <div class="incoming-transaction">
-            <div class="incoming-details">
-              <div class="incoming-label">Получу</div>
-              <input type="number" class="incoming-amount-input" value="1100" />
+          <div class="divider"></div>
+          <div class="receive-row">
+            <div class="receive-details">
+              <div class="receive-label">Получу</div>
+              <div class="receive-amount">1100</div>
             </div>
-            <div class="incoming-icon"></div>
+            <div class="circle-receive"></div>
           </div>
           <div class="sort-icon-container">
             <img class="sort-icon" src="./icons/sort.svg" />
           </div>
         </div>
-        <div class="top-up-button-container">
-          <div class="top-up-button-text">Пополнить баланс</div>
+        <div class="top-up-button">
+          <div class="top-up-text">Пополнить баланс</div>
         </div>
       </div>
     </div>
