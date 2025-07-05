@@ -261,6 +261,7 @@
       justify-content: flex-start;
       flex-shrink: 0;
       position: relative;
+      flex: 1;
     }
 
     .address-label {
@@ -282,6 +283,10 @@
       text-decoration: underline;
       opacity: 0.7;
       position: relative;
+      white-space: normal;
+      overflow-wrap: break-word;
+      max-width: 100%;
+      flex: 1;
     }
 
     .copy-icon-container {
@@ -321,7 +326,6 @@
       font-weight: 500;
     }
 
-    /* Notification styles */
     .notification {
       position: fixed;
       bottom: 20px;
@@ -417,7 +421,7 @@
             <div class="event-address-container">
               <div class="event-address">
                 <div class="address-label">Адрес:</div>
-                <div class="address-text">улица Пушкина дом Колотушкина</div>
+                <a class="address-text" href="#" target="_blank">Рочдельская улица, 15с35</a>
               </div>
               <div class="copy-icon-container">
                 <img class="copy-icon" src="./icons/copy.svg" />
@@ -439,7 +443,7 @@
             <div class="event-address-container">
               <div class="event-address">
                 <div class="address-label">Адрес:</div>
-                <div class="address-text">улица Пушкина дом Колотушкина</div>
+                <a class="address-text" href="#" target="_blank">Рочдельская улица, 15с35</a>
               </div>
               <div class="copy-icon-container">
                 <img class="copy-icon" src="./icons/copy.svg" />
@@ -491,12 +495,17 @@
         }
       });
 
-      // Copy address to clipboard with notification
-      const notification = document.querySelector('#copyNotification');
-      document.querySelectorAll('.copy-icon-container').forEach(container => {
-        container.addEventListener('click', () => {
-          const addressText = container.previousElementSibling.querySelector('.address-text').textContent;
+      // Copy address to clipboard with notification and open in maps
+      document.querySelectorAll('.event-address-container').forEach(container => {
+        const addressElement = container.querySelector('.address-text');
+        const addressText = addressElement.textContent;
+        const encodedAddress = encodeURIComponent(addressText);
+        addressElement.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+
+        const copyContainer = container.querySelector('.copy-icon-container');
+        copyContainer.addEventListener('click', () => {
           navigator.clipboard.writeText(addressText).then(() => {
+            const notification = document.querySelector('#copyNotification');
             notification.classList.add('show');
             setTimeout(() => {
               notification.classList.remove('show');
