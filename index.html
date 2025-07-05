@@ -151,7 +151,6 @@
       border-radius: 40px 40px 0 0;
       padding: 24px;
       max-height: 80vh;
-      overflow-y: auto;
       transform: translateY(100%);
       transition: transform 0.3s ease-in-out;
       z-index: 1000;
@@ -167,6 +166,14 @@
     .events-panel.open,
     .wallet-panel.open {
       transform: translateY(0);
+    }
+
+    .events-panel {
+      overflow-y: auto;
+    }
+
+    .wallet-panel {
+      overflow-y: hidden;
     }
 
     .event-list,
@@ -404,9 +411,7 @@
     .transactions-container {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 20px;
-      border-style: solid;
-      border-color: rgba(255, 255, 255, 0.1);
-      border-width: 1px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -450,7 +455,7 @@
       align-self: stretch;
     }
 
-    .outgoing-amount {
+    .outgoing-amount-input {
       color: #ffffff;
       text-align: left;
       font-family: "Inter-Medium", sans-serif;
@@ -459,6 +464,9 @@
       position: relative;
       width: 300px;
       margin-bottom: -15px;
+      background: transparent;
+      border: none;
+      outline: none;
     }
 
     .outgoing-icon {
@@ -514,7 +522,7 @@
       margin-top: -15px;
     }
 
-    .incoming-amount {
+    .incoming-amount-input {
       color: #ffffff;
       text-align: left;
       font-family: "Inter-Medium", sans-serif;
@@ -522,6 +530,9 @@
       font-weight: 500;
       position: relative;
       width: 300px;
+      background: transparent;
+      border: none;
+      outline: none;
     }
 
     .incoming-icon {
@@ -696,7 +707,7 @@
           <div class="outgoing-transaction">
             <div class="outgoing-details">
               <div class="outgoing-label">Заплачу</div>
-              <div class="outgoing-amount">1000 ₽</div>
+              <input type="number" class="outgoing-amount-input" value="1000" />
             </div>
             <div class="outgoing-icon"></div>
           </div>
@@ -704,7 +715,7 @@
           <div class="incoming-transaction">
             <div class="incoming-details">
               <div class="incoming-label">Получу</div>
-              <div class="incoming-amount">1100</div>
+              <input type="number" class="incoming-amount-input" value="1100" />
             </div>
             <div class="incoming-icon"></div>
           </div>
