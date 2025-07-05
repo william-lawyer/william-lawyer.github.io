@@ -151,7 +151,6 @@
       border-radius: 40px 40px 0 0;
       padding: 24px 24px 100px 24px;
       max-height: 80vh;
-      overflow-y: auto;
       transform: translateY(100%);
       transition: transform 0.3s ease-in-out;
       z-index: 1000;
@@ -167,6 +166,11 @@
     .events-panel.open,
     .wallet-panel.open {
       transform: translateY(0);
+    }
+
+    /* Disable scrolling specifically for wallet-panel */
+    .wallet-panel {
+      overflow-y: hidden;
     }
 
     .event-list {
@@ -464,31 +468,22 @@
       gap: 8px;
     }
 
-.pay-amount-input,
-.receive-amount-input {
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  text-align: left;
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 27px;
-  font-weight: 500;
-  width: 200px;
-  outline: none;
-}
+    .pay-amount-input {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Medium", sans-serif;
+      font-size: 27px;
+      font-weight: 500;
+      width: 200px;
+      outline: none;
+    }
 
-.pay-amount-container,
-.receive-amount-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.pay-amount-input::placeholder,
-.receive-amount-input::placeholder {
-  color: #ffffff;
-  opacity: 0.5;
-}
+    .pay-amount-input::placeholder {
+      color: #ffffff;
+      opacity: 0.5;
+    }
 
     .pay-amount-symbol {
       color: #ffffff;
@@ -747,29 +742,29 @@
           <div class="balance-amount">1000$</div>
         </div>
         <div class="transaction-section">
-  <div class="pay-row">
-    <div class="pay-details">
-      <div class="pay-label">Заплачу</div>
-      <div class="pay-amount-container">
-        <input type="text" class="pay-amount-input" value="1000 ₽" placeholder="0" />
-      </div>
-    </div>
-    <div class="circle-pay"></div>
-  </div>
-  <div class="divider"></div>
-  <div class="receive-row">
-    <div class="receive-details">
-      <div class="receive-label">Получу</div>
-      <div class="receive-amount-container">
-        <input type="text" class="receive-amount-input" value="1100 ₽" placeholder="0" />
-      </div>
-    </div>
-    <div class="circle-receive"></div>
-  </div>
-  <div class="sort-icon-container">
-    <img class="sort-icon" src="./icons/sort.svg" />
-  </div>
-</div>
+          <div class="pay-row">
+            <div class="pay-details">
+              <div class="pay-label">Заплачу</div>
+              <div class="pay-amount-container">
+                <input type="number" class="pay-amount-input" value="1000" min="0" step="1" />
+              </div>
+            </div>
+            <div class="circle-pay"></div>
+          </div>
+          <div class="divider"></div>
+          <div class="receive-row">
+            <div class="receive-details">
+              <div class="receive-label">Получу</div>
+              <div class="receive-amount-container">
+                <input type="number" class="receive-amount-input" value="1100" min="0" step="1" />
+              </div>
+            </div>
+            <div class="circle-receive"></div>
+          </div>
+          <div class="sort-icon-container">
+            <img class="sort-icon" src="./icons/sort.svg" />
+          </div>
+        </div>
         <div class="top-up-button">
           <div class="top-up-text">Пополнить баланс</div>
         </div>
@@ -780,43 +775,6 @@
   </div>
 
   <script>
-    function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-}
-
-// Обработка ввода для pay-amount-input и receive-amount-input
-function setupInputFormatting(input) {
-  input.addEventListener('input', function(e) {
-    // Удаляем всё, кроме цифр
-    let value = e.target.value.replace(/[^0-9]/g, '');
-    // Форматируем число и добавляем символ рубля
-    if (value) {
-      e.target.value = formatNumber(value) + ' ₽';
-    } else {
-      e.target.value = '';
-    }
-  });
-
-  // Предотвращаем некорректное удаление
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Backspace' || e.key === 'Delete') {
-      let value = e.target.value.replace(/[^0-9]/g, '');
-      if (value.length === 0) {
-        e.target.value = '';
-      }
-    }
-  });
-}
-
-// Применяем форматирование к обоим полям ввода
-const payInput = document.querySelector('.pay-amount-input');
-const receiveInput = document.querySelector('.receive-amount-input');
-setupInputFormatting(payInput);
-setupInputFormatting(receiveInput);
-
-// Инициализация начальных значений с форматированием
-payInput.value = formatNumber(payInput.value.replace(/[^0-9]/g, '')) + ' ₽' || '';
-receiveInput.value = formatNumber(receiveInput.value.replace(/[^0-9]/g, '')) + ' ₽' || '';
     window.onload = () => {
       const tg = window.Telegram.WebApp;
 
@@ -841,8 +799,10 @@ receiveInput.value = formatNumber(receiveInput.value.replace(/[^0-9]/g, '')) + '
 
       appsLink.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation(); // Prevent click from bubbling to document
         appsPanel.classList.toggle('open');
-        walletPanel.classList.remove('open'); // Close wallet panel if open
+        walletPanel.classList.remove('open');
+        walletPanel.style.transform = ''; // Reset transform
       });
 
       // Slide panel functionality for wallet
@@ -851,8 +811,10 @@ receiveInput.value = formatNumber(receiveInput.value.replace(/[^0-9]/g, '')) + '
 
       walletLink.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation(); // Prevent click from bubbling to document
         walletPanel.classList.toggle('open');
-        appsPanel.classList.remove('open'); // Close events panel if open
+        appsPanel.classList.remove('open');
+        walletPanel.style.transform = ''; // Reset transform
       });
 
       // Close panels when clicking outside
@@ -862,6 +824,7 @@ receiveInput.value = formatNumber(receiveInput.value.replace(/[^0-9]/g, '')) + '
         }
         if (!walletPanel.contains(e.target) && !walletLink.contains(e.target)) {
           walletPanel.classList.remove('open');
+          walletPanel.style.transform = ''; // Reset transform
         }
       });
 
@@ -883,6 +846,40 @@ receiveInput.value = formatNumber(receiveInput.value.replace(/[^0-9]/g, '')) + '
           }).catch(err => {
             console.error('Failed to copy: ', err);
           });
+        });
+      });
+
+      // Handle input focus to shift elements upward
+      const inputs = document.querySelectorAll('.pay-amount-input, .receive-amount-input');
+      inputs.forEach(input => {
+        input.addEventListener('focus', (e) => {
+          e.stopPropagation(); // Prevent click from closing panel
+          const walletPanel = document.querySelector('#walletPanel');
+          if (!walletPanel.classList.contains('open')) return;
+
+          // Get the input's position relative to the viewport
+          const inputRect = input.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+          const walletPanelRect = walletPanel.getBoundingClientRect();
+
+          // Calculate the desired scroll position (input slightly above center)
+          const desiredInputTop = viewportHeight * 0.4; // 40% from top
+          const scrollOffset = inputRect.top - desiredInputTop + walletPanelRect.top;
+
+          // Adjust the wallet panel's position upward
+          walletPanel.style.transform = `translateY(-${scrollOffset}px)`;
+          walletPanel.style.transition = 'transform 0.3s ease-in-out';
+        });
+
+        input.addEventListener('blur', () => {
+          const walletPanel = document.querySelector('#walletPanel');
+          if (walletPanel.classList.contains('open')) {
+            // Reset to open position
+            walletPanel.style.transform = 'translateY(0)';
+          } else {
+            // Reset transform to allow CSS to handle closed state
+            walletPanel.style.transform = '';
+          }
         });
       });
 
