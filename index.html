@@ -286,8 +286,8 @@
 
     .copy-icon-container {
       flex-shrink: 0;
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       position: relative;
       overflow: hidden;
       cursor: pointer;
@@ -295,14 +295,14 @@
     }
 
     .copy-icon {
-      height: auto;
+      height: 100%;
       position: absolute;
       left: 1.5px;
       top: 1.5px;
       overflow: visible;
       user-select: none;
+      width: 100%;
     }
-
 
     .buy-ticket-button {
       background: linear-gradient(95.35deg, rgba(85, 65, 217, 1) 0%, rgba(120, 100, 255, 1) 100%);
@@ -319,6 +319,28 @@
       position: relative;
       font-size: 18px;
       font-weight: 500;
+    }
+
+    /* Notification styles */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      background: rgba(255, 255, 255, 0.9);
+      color: #0b0b0d;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 400;
+      opacity: 0;
+      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      z-index: 1001;
+    }
+
+    .notification.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
 
     @media screen and (max-width: 768px) {
@@ -430,6 +452,8 @@
         </div>
       </div>
     </div>
+
+    <div class="notification" id="copyNotification">Адрес скопирован!</div>
   </div>
 
   <script>
@@ -467,15 +491,15 @@
         }
       });
 
-      // Copy address to clipboard with tooltip
+      // Copy address to clipboard with notification
+      const notification = document.querySelector('#copyNotification');
       document.querySelectorAll('.copy-icon-container').forEach(container => {
         container.addEventListener('click', () => {
           const addressText = container.previousElementSibling.querySelector('.address-text').textContent;
           navigator.clipboard.writeText(addressText).then(() => {
-            const feedback = container.querySelector('.copy-feedback');
-            feedback.classList.add('show');
+            notification.classList.add('show');
             setTimeout(() => {
-              feedback.classList.remove('show');
+              notification.classList.remove('show');
             }, 2000);
           }).catch(err => {
             console.error('Failed to copy: ', err);
