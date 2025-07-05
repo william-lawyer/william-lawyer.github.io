@@ -1,89 +1,118 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Telegram WebApp UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       background: #0b0b0d;
       font-family: 'Inter', sans-serif;
-      color: #fff;
     }
+
     .app-container {
+      background: #0b0b0d;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
       max-width: 320px;
       margin: auto;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
+
     .profile-section {
       display: flex;
       flex-direction: column;
       gap: 8px;
       align-items: center;
+      justify-content: flex-end;
+      align-self: stretch;
       margin-top: 4rem;
     }
+
     .avatar {
       background: #d9d9d9;
       border-radius: 50%;
       width: 59px;
       height: 59px;
     }
+
     .user-name {
+      color: #ffffff;
+      text-align: center;
       font-size: 16px;
       font-weight: 400;
-      text-align: center;
+      align-self: stretch;
     }
+
     .registration-date {
+      color: #ffffff;
+      text-align: center;
       font-size: 12px;
       font-weight: 300;
       opacity: 0.7;
-      text-align: center;
+      align-self: stretch;
     }
+
     .code-section {
       display: flex;
       flex-direction: column;
       gap: 8px;
       margin-top: 8rem;
       align-items: center;
+      align-self: stretch;
     }
+
     .code-label {
+      color: #ffffff;
       font-size: 16px;
       font-weight: 300;
       opacity: 0.7;
     }
+
     .code-box {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: 20px;
-      padding: 24px 110px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 24px 0;
       display: flex;
       justify-content: center;
+      align-self: stretch;
     }
+
     .code-value {
+      color: #ffffff;
       font-size: 16px;
       font-weight: 300;
     }
+
     .bottom-nav {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 20px;
       padding: 16px 0;
       display: flex;
       gap: 80px;
+      align-items: center;
       justify-content: center;
-      margin-top: auto;
+      align-self: stretch;
+      margin-top: 13rem;
     }
+
     .nav-item {
       display: flex;
       flex-direction: column;
       gap: 8px;
       align-items: center;
     }
+
     .icon-container {
       width: 40px;
       height: 40px;
@@ -91,97 +120,217 @@
       align-items: center;
       justify-content: center;
     }
+
     .icon {
       width: 30px;
       height: 30px;
       object-fit: contain;
+      display: block;
     }
-    .events-panel, .wallet-panel {
+
+    .icon-user { left: 5px; top: 3px; }
+    .icon-apps { left: 4px; top: 4px; }
+    .icon-wallet { left: 2px; top: 3px; }
+
+    /* Slide-up panel styles */
+    .events-panel,
+    .events-panel *,
+    .wallet-panel,
+    .wallet-panel * {
+      box-sizing: border-box;
+    }
+
+    .events-panel,
+    .wallet-panel {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
+      width: 100%;
       background: #151516;
       border-radius: 40px 40px 0 0;
-      padding: 24px 24px 100px;
+      padding: 24px 24px 100px 24px;
       max-height: 80vh;
       overflow-y: auto;
       transform: translateY(100%);
       transition: transform 0.3s ease-in-out;
       z-index: 1000;
       scrollbar-width: none;
+      -ms-overflow-style: none;
     }
-    .events-panel::-webkit-scrollbar, .wallet-panel::-webkit-scrollbar { display: none; }
-    .events-panel.open, .wallet-panel.open { transform: translateY(0); }
+
+    .events-panel::-webkit-scrollbar,
+    .wallet-panel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .events-panel.open,
+    .wallet-panel.open {
+      transform: translateY(0);
+    }
+
     .event-list {
       display: flex;
       flex-direction: column;
       gap: 32px;
+      align-items: center;
+      justify-content: flex-start;
       padding: 16px;
     }
+
     .event-item {
       display: flex;
       flex-direction: column;
       gap: 32px;
+      align-items: center;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      position: relative;
       width: 100%;
     }
+
     .event-image {
       background: #d9d9d9;
       border-radius: 24px;
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 400px;
       height: 300px;
+      position: relative;
     }
+
     .event-details {
       display: flex;
       flex-direction: column;
       gap: 12px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      position: relative;
+      width: 100%;
     }
+
     .event-header {
       display: flex;
+      flex-direction: row;
+      align-items: flex-start;
       justify-content: space-between;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
     }
-    .event-title, .event-price {
+
+    .event-title {
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Medium", sans-serif;
       font-size: 24px;
       font-weight: 500;
+      position: relative;
     }
+
+    .event-price {
+      color: #ffffff;
+      text-align: right;
+      font-family: "Inter-Medium", sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+      position: relative;
+    }
+
     .event-date {
+      color: #ffffffbe;
+      text-align: left;
+      font-family: "Inter-Light", sans-serif;
       font-size: 16px;
       font-weight: 300;
       opacity: 0.7;
+      position: relative;
     }
+
     .event-address-container {
       display: flex;
-      align-items: center;
+      flex-direction: row;
       gap: 12px;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
     }
+
     .event-address {
       display: flex;
+      flex-direction: row;
       gap: 6px;
       align-items: center;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      position: relative;
       flex: 1;
     }
-    .address-label, .address-text {
+
+    .address-label {
       color: #ffffffbe;
+      text-align: left;
+      font-family: "Inter-Light", sans-serif;
       font-size: 16px;
       font-weight: 300;
       opacity: 0.7;
+      position: relative;
     }
+
     .address-text {
+      color: #ffffffbe;
+      text-align: left;
+      font-family: "Inter-Light", sans-serif;
+      font-size: 16px;
+      font-weight: 300;
       text-decoration: underline;
+      opacity: 0.7;
+      position: relative;
+      white-space: normal;
       overflow-wrap: break-word;
+      max-width: 100%;
+      flex: 1;
     }
+
     .copy-icon-container {
+      flex-shrink: 0;
       width: 20px;
       height: 20px;
+      position: relative;
+      overflow: hidden;
       cursor: pointer;
+      user-select: none;
     }
+
+    .copy-icon {
+      height: 100%;
+      position: absolute;
+      left: 1.5px;
+      top: 1.5px;
+      overflow: visible;
+      user-select: none;
+      width: 100%;
+    }
+
     .buy-ticket-button {
-      background: linear-gradient(95.35deg, #5541d9 0%, #7864ff 100%);
+      background: linear-gradient(95.35deg, rgba(85, 65, 217, 1) 0%, rgba(120, 100, 255, 1) 100%);
       border-radius: 18px;
+      color: #ffffff;
       padding: 20px 28px;
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
       font-size: 18px;
       font-weight: 500;
-      text-align: center;
     }
+
     .notification {
       position: fixed;
       bottom: 20px;
@@ -192,124 +341,332 @@
       padding: 12px 24px;
       border-radius: 12px;
       font-size: 14px;
+      font-weight: 400;
       opacity: 0;
       transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
       z-index: 1001;
     }
+
     .notification.show {
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
-    .wallet-container {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      max-width: 300px;
-      margin: 0 auto;
+
+    /* Wallet panel styles */
+    .wallet-container,
+    .wallet-container * {
+      box-sizing: border-box;
     }
+
+.wallet-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 100%; /* Убираем ограничение max-width: 300px */
+  position: relative;
+  margin: 0 auto;
+  padding: 0 16px; /* Добавляем отступы для мобильных устройств */
+}
+
     .wallet-image {
-      width: 100%;
+      flex-shrink: 0;
+      width: 130%;
+      height: 130%;
+      position: relative;
+      object-fit: fill;
       margin-bottom: -88px;
     }
+
     .balance-section {
       display: flex;
       flex-direction: column;
+      gap: 0px;
       align-items: center;
+      justify-content: center;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
     }
+
     .balance-label {
+      color: #ffffff;
+      text-align: center;
+      font-family: "Inter-Light", sans-serif;
       font-size: 16px;
       font-weight: 300;
       opacity: 0.7;
+      position: relative;
+      align-self: stretch;
     }
+
     .balance-amount {
+      color: #ffffff;
+      text-align: center;
+      font-family: "Inter-Regular", sans-serif;
       font-size: 30px;
       font-weight: 400;
+      position: relative;
+      align-self: stretch;
     }
-    .transaction-section {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 20px;
+
+.transaction-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.1);
+  border-width: 1px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%; /* Устанавливаем ширину 100% */
+  box-sizing: border-box;
+}
+
+    .pay-row {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .pay-row, .receive-row {
-      display: flex;
-      justify-content: space-between;
+      flex-direction: row;
       align-items: center;
+      justify-content: space-between;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
     }
-    .pay-details, .receive-details {
+
+    .pay-details {
       display: flex;
       flex-direction: column;
       gap: 8px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      position: relative;
     }
-    .pay-label, .receive-label {
+
+    .pay-label {
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Regular", sans-serif;
       font-size: 16px;
       font-weight: 400;
       opacity: 0.7;
+      position: relative;
+      align-self: stretch;
     }
-    .pay-amount-container, .receive-amount-container {
+
+.pay-amount-container,
+.receive-amount-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%; /* Убедимся, что контейнер занимает всю ширину */
+}
+
+.pay-amount-input,
+.receive-amount-input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 27px;
+  font-weight: 500;
+  width: 100%; /* Заменяем width: 200px на 100% */
+  outline: none;
+}
+
+
+
+    .pay-amount-symbol {
+      color: #ffffff;
+      font-family: "Inter-Medium", sans-serif;
+      font-size: 27px;
+      font-weight: 500;
+    }
+
+    .circle-pay {
+      background: rgba(217, 217, 217, 0);
+      border-radius: 50%;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      position: relative;
+    }
+
+    .divider {
+      margin-top: -1px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.1);
+      border-width: 1px 0 0 0;
+      flex-shrink: 0;
+      width: 260px;
+      height: 0px;
+      position: relative;
+    }
+
+    .receive-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .receive-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .receive-label {
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Regular", sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      opacity: 0.7;
+      position: relative;
+      align-self: stretch;
+    }
+
+    .receive-amount-container {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .pay-amount-input, .receive-amount-input {
+
+    .receive-amount-input {
       background: transparent;
       border: none;
-      color: #fff;
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Medium", sans-serif;
       font-size: 27px;
       font-weight: 500;
       width: 200px;
       outline: none;
     }
+
     .receive-amount-input::placeholder {
       color: #ffffff;
       opacity: 0.5;
     }
-    .pay-amount-symbol, .receive-amount-symbol {
+
+    .receive-amount-symbol {
+      color: #ffffff;
+      font-family: "Inter-Medium", sans-serif;
       font-size: 27px;
       font-weight: 500;
     }
-    .circle-pay, .circle-receive {
-      background: transparent;
+
+    .circle-receive {
+      background: rgba(217, 217, 217, 0);
       border-radius: 50%;
+      flex-shrink: 0;
       width: 20px;
       height: 20px;
+      position: relative;
     }
-    .divider {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      width: 100%;
-    }
+
     .sort-icon-container {
+      flex-shrink: 0;
       width: 24px;
       height: 24px;
       position: absolute;
-      left: 50%;
+      left: 140px;
       top: 70px;
-      transform: translateX(-50%);
+      overflow: hidden;
+      backdrop-filter: blur(2px);
     }
+
+    .sort-icon {
+      height: auto;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      overflow: visible;
+    }
+
     .top-up-button {
-      background: #5541d9;
+      background-color: #5541d9;
       border-radius: 15px;
       padding: 22px 24px;
-      text-align: center;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .top-up-text {
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-SemiBold", sans-serif;
       font-size: 14px;
       font-weight: 600;
+      position: relative;
     }
-    @media (max-width: 768px) {
+
+    @media screen and (max-width: 768px) {
       .app-container {
-        padding: 3rem 0;
+        display: flex;
+        flex-direction: column;
         justify-content: space-between;
+        min-height: 100vh;
+        padding: 3rem 0;
       }
-      .profile-section { margin-top: 0; padding-top: 5rem; }
-      .code-section { margin-top: -4rem; }
+
+      .profile-section {
+        margin-top: 0;
+        padding-top: 5rem;
+      }
+
+      .code-section {
+        margin-top: -4rem;
+      }
+
       .bottom-nav {
+        margin-top: 0;
         position: sticky;
         bottom: 0;
-        margin-top: 0;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;      
       }
+      @media screen and (max-width: 768px) {
+  .pay-amount-input,
+  .receive-amount-input {
+    font-size: 24px; /* Уменьшаем размер шрифта для мобильных */
+  }
+
+  .pay-amount-container,
+  .receive-amount-container {
+    flex-wrap: nowrap; /* Запрещаем перенос элементов */
+  }
+
+  .wallet-container {
+    padding: 0 10px; /* Уменьшаем отступы */
+  }
+
+  .transaction-section {
+    padding: 15px; /* Уменьшаем padding для мобильных */
+  }
+}
     }
+    
   </style>
 </head>
 <body>
@@ -319,29 +676,32 @@
       <div class="user-name">Имя Фамилия</div>
       <div class="registration-date">Дата регистрации: 21 июня 2024</div>
     </div>
+
     <div class="code-section">
       <div class="code-label">Мой код:</div>
       <div class="code-box">
         <div class="code-value">XXXX-XXXX</div>
       </div>
     </div>
+
     <div class="bottom-nav">
       <div class="nav-item">
         <div class="icon-container">
-          <a href="#"><img class="icon" src="./icons/user.svg"></a>
+          <a href="#"><img class="icon icon-user" src="./icons/user.svg" /></a>
         </div>
       </div>
       <div class="nav-item">
         <div class="icon-container">
-          <a href="#" class="apps-link"><img class="icon" src="./icons/apps.svg"></a>
+          <a href="#" class="apps-link"><img class="icon icon-apps" src="./icons/apps.svg" /></a>
         </div>
       </div>
       <div class="nav-item">
         <div class="icon-container">
-          <a href="#" class="wallet-link"><img class="icon" src="./icons/wallet.svg"></a>
+          <a href="#" class="wallet-link"><img class="icon icon-wallet" src="./icons/wallet.svg" /></a>
         </div>
       </div>
     </div>
+
     <div class="events-panel" id="appsPanel">
       <div class="event-list">
         <div class="event-item">
@@ -358,10 +718,12 @@
                 <a class="address-text" href="#" target="_blank">Рочдельская улица, 15с35</a>
               </div>
               <div class="copy-icon-container">
-                <img class="copy-icon" src="./icons/copy.svg">
+                <img class="copy-icon" src="./icons/copy.svg" />
               </div>
             </div>
-            <div class="buy-ticket-button">Купить билет</div>
+          </div>
+          <div class="buy-ticket-button">
+            <div class="buy-ticket-text">Купить билет</div>
           </div>
         </div>
         <div class="event-item">
@@ -378,17 +740,20 @@
                 <a class="address-text" href="#" target="_blank">Рочдельская улица, 15с35</a>
               </div>
               <div class="copy-icon-container">
-                <img class="copy-icon" src="./icons/copy.svg">
+                <img class="copy-icon" src="./icons/copy.svg" />
               </div>
             </div>
-            <div class="buy-ticket-button">Купить билет</div>
+          </div>
+          <div class="buy-ticket-button">
+            <div class="buy-ticket-text">Купить билет</div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="wallet-panel" id="walletPanel">
       <div class="wallet-container">
-        <img class="wallet-image" src="./icons/card.png">
+        <img class="wallet-image" src="./icons/card.png" />
         <div class="balance-section">
           <div class="balance-label">Баланс:</div>
           <div class="balance-amount">1000$</div>
@@ -398,7 +763,7 @@
             <div class="pay-details">
               <div class="pay-label">Заплачу</div>
               <div class="pay-amount-container">
-                <input type="number" class="pay-amount-input" value="1000" min="0" step="1">
+                <input type="number" class="pay-amount-input" value="1000" min="0" step="1" />
               </div>
             </div>
             <div class="circle-pay"></div>
@@ -408,55 +773,95 @@
             <div class="receive-details">
               <div class="receive-label">Получу</div>
               <div class="receive-amount-container">
-                <input type="number" class="receive-amount-input" value="1100" min="0" step="1">
+                <input type="number" class="receive-amount-input" value="1100" min="0" step="1" />
+
               </div>
             </div>
             <div class="circle-receive"></div>
           </div>
           <div class="sort-icon-container">
+            <img class="sort-icon" src="./icons/sort.svg" />
           </div>
         </div>
-        <div class="top-up-button">Пополнить баланс</div>
+        <div class="top-up-button">
+          <div class="top-up-text">Пополнить баланс</div>
+        </div>
       </div>
     </div>
+
     <div class="notification" id="copyNotification">Адрес скопирован!</div>
   </div>
+
   <script>
     window.onload = () => {
       const tg = window.Telegram.WebApp;
+
       const user = tg.initDataUnsafe?.user;
-      document.querySelector('.user-name').textContent = user ? `${user.first_name}${user.last_name ? ' ' + user.last_name : ''}` : 'Имя неизвестно';
-      if (user?.photo_url) {
-        document.querySelector('.avatar').style.background = `url(${user.photo_url}) center / cover no-repeat`;
+      const fullName = user?.first_name + (user?.last_name ? ' ' + user.last_name : '');
+      document.querySelector('.user-name').textContent = fullName || 'Имя неизвестно';
+
+      const avatarUrl = user?.photo_url;
+      if (avatarUrl) {
+        const avatar = document.querySelector('.avatar');
+        avatar.style.background = `url(${avatarUrl}) center center / cover no-repeat`;
       }
-      document.querySelector('.registration-date').textContent = `Дата регистрации: ${new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+
+      const now = new Date();
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      const formattedDate = now.toLocaleDateString('ru-RU', options);
+      document.querySelector('.registration-date').textContent = `Дата регистрации: ${formattedDate}`;
+
+      // Slide panel functionality for events
+      const appsLink = document.querySelector('.apps-link');
       const appsPanel = document.querySelector('#appsPanel');
-      const walletPanel = document.querySelector('#walletPanel');
-      document.querySelector('.apps-link').addEventListener('click', e => {
+
+      appsLink.addEventListener('click', (e) => {
         e.preventDefault();
         appsPanel.classList.toggle('open');
-        walletPanel.classList.remove('open');
+        walletPanel.classList.remove('open'); // Close wallet panel if open
       });
-      document.querySelector('.wallet-link').addEventListener('click', e => {
+
+      // Slide panel functionality for wallet
+      const walletLink = document.querySelector('.wallet-link');
+      const walletPanel = document.querySelector('#walletPanel');
+
+      walletLink.addEventListener('click', (e) => {
         e.preventDefault();
         walletPanel.classList.toggle('open');
-        appsPanel.classList.remove('open');
+        appsPanel.classList.remove('open'); // Close events panel if open
       });
-      document.addEventListener('click', e => {
-        if (!appsPanel.contains(e.target) && !e.target.closest('.apps-link')) appsPanel.classList.remove('open');
-        if (!walletPanel.contains(e.target) && !e.target.closest('.wallet-link')) walletPanel.classList.remove('open');
+
+      // Close panels when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!appsPanel.contains(e.target) && !appsLink.contains(e.target)) {
+          appsPanel.classList.remove('open');
+        }
+        if (!walletPanel.contains(e.target) && !walletLink.contains(e.target)) {
+          walletPanel.classList.remove('open');
+        }
       });
+
+      // Copy address to clipboard with notification and open in maps
       document.querySelectorAll('.event-address-container').forEach(container => {
         const addressElement = container.querySelector('.address-text');
-        addressElement.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressElement.textContent)}`;
-        container.querySelector('.copy-icon-container').addEventListener('click', () => {
-          navigator.clipboard.writeText(addressElement.textContent).then(() => {
+        const addressText = addressElement.textContent;
+        const encodedAddress = encodeURIComponent(addressText);
+        addressElement.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+
+        const copyContainer = container.querySelector('.copy-icon-container');
+        copyContainer.addEventListener('click', () => {
+          navigator.clipboard.writeText(addressText).then(() => {
             const notification = document.querySelector('#copyNotification');
             notification.classList.add('show');
-            setTimeout(() => notification.classList.remove('show'), 2000);
-          }).catch(err => console.error('Failed to copy: ', err));
+            setTimeout(() => {
+              notification.classList.remove('show');
+            }, 2000);
+          }).catch(err => {
+            console.error('Failed to copy: ', err);
+          });
         });
       });
+
       tg.expand();
     };
   </script>
