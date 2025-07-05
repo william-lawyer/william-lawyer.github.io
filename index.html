@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Telegram WebApp UI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     * {
@@ -114,25 +114,209 @@
     }
 
     .icon-container {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .icon {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  display: block;
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      display: block;
     }
 
     .icon-user { left: 5px; top: 3px; }
     .icon-apps { left: 4px; top: 4px; }
     .icon-wallet { left: 2px; top: 3px; }
 
-    /* === Адаптация только для телефонов === */
+    /* Slide-up panel styles */
+    .events-panel,
+    .events-panel * {
+      box-sizing: border-box;
+    }
+
+    .events-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 320px;
+      margin: auto;
+      background: #151516;
+      border-radius: 40px 40px 0 0;
+      padding: 20px;
+      max-height: 80vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .events-panel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .events-panel.open {
+      transform: translateY(0);
+    }
+
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 12px;
+    }
+
+    .event-item {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .event-image {
+      background: #d9d9d9;
+      border-radius: 20px;
+      flex-shrink: 0;
+      width: 264px;
+      height: 264px;
+      position: relative;
+    }
+
+    .event-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .event-header {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .event-title {
+      color: #ffffff;
+      text-align: left;
+      font-family: "Inter-Medium", sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .event-price {
+      color: #ffffff;
+      text-align: right;
+      font-family: "Inter-Medium", sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .event-date {
+      color: #ffffffbe;
+      text-align: left;
+      font-family: "Inter-Light", sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      opacity: 0.7;
+      position: relative;
+    }
+
+    .event-address-container {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .event-address {
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+      align-items: center;
+      justify-content: flex-start;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .address-label {
+      color: #ffffffbe;
+      text-align: left;
+      font-family: "Inter-Light", sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      opacity: 0.7;
+      position: relative;
+    }
+
+    .address-text {
+      color: #ffffffbe;
+      text-align: left;
+      font-family: "Inter-Light", sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      text-decoration: underline;
+      opacity: 0.7;
+      position: relative;
+    }
+
+    .copy-icon-container {
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .copy-icon {
+      height: auto;
+      position: absolute;
+      left: 1.17px;
+      top: 1.17px;
+      overflow: visible;
+      user-select: none;
+    }
+
+
+    .buy-ticket-button {
+      background: linear-gradient(95.35deg, rgba(85, 65, 217, 1) 0%, rgba(120, 100, 255, 1) 100%);
+      border-radius: 15px;
+      color: #ffffff;
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      align-self: stretch;
+      flex-shrink: 0;
+      position: relative;
+    }
+
     @media screen and (max-width: 768px) {
       .app-container {
         display: flex;
@@ -157,7 +341,7 @@
         bottom: 0;
         background: rgba(255, 255, 255, 0.05);
         border-radius: 20px;      
-    }
+      }
     }
   </style>
 </head>
@@ -184,12 +368,63 @@
       </div>
       <div class="nav-item">
         <div class="icon-container">
-          <a href="#"><img class="icon icon-apps" src="./icons/apps.svg" /></a>
+          <a href="#" class="apps-link"><img class="icon icon-apps" src="./icons/apps.svg" /></a>
         </div>
       </div>
       <div class="nav-item">
         <div class="icon-container">
           <a href="#"><img class="icon icon-wallet" src="./icons/wallet.svg" /></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="events-panel" id="appsPanel">
+      <div class="event-list">
+        <div class="event-item">
+          <div class="event-image"></div>
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-title">Название</div>
+              <div class="event-price">1000$</div>
+            </div>
+            <div class="event-date">Дата проведения: 21 июня 2024</div>
+            <div class="event-address-container">
+              <div class="event-address">
+                <div class="address-label">Адрес:</div>
+                <div class="address-text">улица Пушкина дом Колотушкина</div>
+              </div>
+              <div class="copy-icon-container">
+                <img class="copy-icon" src="./icons/copy.svg" />
+                <span class="copy-feedback">Скопировано!</span>
+              </div>
+            </div>
+          </div>
+          <div class="buy-ticket-button">
+            <div class="buy-ticket-text">Купить билет</div>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-image"></div>
+          <div class="event-details">
+            <div class="event-header">
+              <div class="event-title">Название</div>
+              <div class="event-price">1000$</div>
+            </div>
+            <div class="event-date">Дата проведения: 21 июня 2024</div>
+            <div class="event-address-container">
+              <div class="event-address">
+                <div class="address-label">Адрес:</div>
+                <div class="address-text">улица Пушкина дом Колотушкина</div>
+              </div>
+              <div class="copy-icon-container">
+                <img class="copy-icon" src="./icons/copy.svg" />
+                <span class="copy-feedback">Скопировано!</span>
+              </div>
+            </div>
+          </div>
+          <div class="buy-ticket-button">
+            <div class="buy-ticket-text">Купить билет</div>
+          </div>
         </div>
       </div>
     </div>
@@ -213,6 +448,38 @@
       const options = { day: 'numeric', month: 'long', year: 'numeric' };
       const formattedDate = now.toLocaleDateString('ru-RU', options);
       document.querySelector('.registration-date').textContent = `Дата регистрации: ${formattedDate}`;
+
+      // Slide panel functionality
+      const appsLink = document.querySelector('.apps-link');
+      const appsPanel = document.querySelector('#appsPanel');
+
+      appsLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        appsPanel.classList.toggle('open');
+      });
+
+      // Close panel when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!appsPanel.contains(e.target) && !appsLink.contains(e.target)) {
+          appsPanel.classList.remove('open');
+        }
+      });
+
+      // Copy address to clipboard
+      document.querySelectorAll('.copy-icon-container').forEach(container => {
+        container.addEventListener('click', () => {
+          const addressText = container.previousElementSibling.querySelector('.address-text').textContent;
+          navigator.clipboard.writeText(addressText).then(() => {
+            const feedback = container.querySelector('.copy-feedback');
+            feedback.classList.add('show');
+            setTimeout(() => {
+              feedback.classList.remove('show');
+            }, 2000);
+          }).catch(err => {
+            console.error('Failed to copy: ', err);
+          });
+        });
+      });
 
       tg.expand();
     };
