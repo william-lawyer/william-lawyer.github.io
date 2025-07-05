@@ -151,6 +151,7 @@
       border-radius: 40px 40px 0 0;
       padding: 24px 24px 100px 24px;
       max-height: 80vh;
+      overflow-y: auto;
       transform: translateY(100%);
       transition: transform 0.3s ease-in-out;
       z-index: 1000;
@@ -166,12 +167,6 @@
     .events-panel.open,
     .wallet-panel.open {
       transform: translateY(0);
-      z-index: 1000;
-    }
-
-    /* Disable scrolling specifically for wallet-panel */
-    .wallet-panel {
-      overflow-y: hidden;
     }
 
     .event-list {
@@ -758,6 +753,7 @@
               <div class="receive-label">Получу</div>
               <div class="receive-amount-container">
                 <input type="number" class="receive-amount-input" value="1100" min="0" step="1" />
+
               </div>
             </div>
             <div class="circle-receive"></div>
@@ -800,10 +796,8 @@
 
       appsLink.addEventListener('click', (e) => {
         e.preventDefault();
-        e.stopPropagation(); // Prevent click from bubbling to document
         appsPanel.classList.toggle('open');
-        walletPanel.classList.remove('open');
-        walletPanel.style.transform = ''; // Reset transform
+        walletPanel.classList.remove('open'); // Close wallet panel if open
       });
 
       // Slide panel functionality for wallet
@@ -812,10 +806,8 @@
 
       walletLink.addEventListener('click', (e) => {
         e.preventDefault();
-        e.stopPropagation(); // Prevent click from bubbling to document
         walletPanel.classList.toggle('open');
-        appsPanel.classList.remove('open');
-        walletPanel.style.transform = ''; // Reset transform
+        appsPanel.classList.remove('open'); // Close events panel if open
       });
 
       // Close panels when clicking outside
@@ -825,7 +817,6 @@
         }
         if (!walletPanel.contains(e.target) && !walletLink.contains(e.target)) {
           walletPanel.classList.remove('open');
-          walletPanel.style.transform = ''; // Reset transform
         }
       });
 
@@ -847,40 +838,6 @@
           }).catch(err => {
             console.error('Failed to copy: ', err);
           });
-        });
-      });
-
-      // Handle input focus to shift elements upward
-      const inputs = document.querySelectorAll('.pay-amount-input, .receive-amount-input');
-      inputs.forEach(input => {
-        input.addEventListener('focus', (e) => {
-          e.stopPropagation(); // Prevent click from closing panel
-          const walletPanel = document.querySelector('#walletPanel');
-          if (!walletPanel.classList.contains('open')) return;
-
-          // Get the input's position relative to the viewport
-          const inputRect = input.getBoundingClientRect();
-          const viewportHeight = window.innerHeight;
-          const walletPanelRect = walletPanel.getBoundingClientRect();
-
-          // Calculate the desired scroll position (input slightly above center)
-          const desiredInputTop = viewportHeight * 0.65; // 40% from top
-          const scrollOffset = inputRect.top - desiredInputTop + walletPanelRect.top;
-
-          // Adjust the wallet panel's position upward
-          walletPanel.style.transform = `translateY(-${scrollOffset}px)`;
-          walletPanel.style.transition = 'transform 0.3s ease-in-out';
-        });
-
-        input.addEventListener('blur', () => {
-          const walletPanel = document.querySelector('#walletPanel');
-          if (walletPanel.classList.contains('open')) {
-            // Reset to open position
-            walletPanel.style.transform = 'translateY(0)';
-          } else {
-            // Reset transform to allow CSS to handle closed state
-            walletPanel.style.transform = '';
-          }
         });
       });
 
