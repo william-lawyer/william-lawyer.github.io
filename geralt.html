@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Адвокат Geralt</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="menu">
+        <a href="./index.html">William Bates</a>
+        <a style="color: #ffd700;" href="./geralt.html">Geralt Grand</a>  
+    </div>
+    <div class="container">
+      <h1>Адвокат Geralt Grand</h1>
+      <p>Помощь в решении ваших юридических вопросов</p>
+      <a href="#contact-form" class="btn-contact">Обратиться</a>
+    </div>
+  </header>
+
+  <section class="about">
+    <div class="container">
+      <img src="/img/geralt.png" alt="Фото адвоката" class="profile-photo">
+      <h2>Обо мне</h2>
+      <p>Геральт Грант — опытный и уважаемый частный адвокат, ранее занимавший пост председателя Верховного суда штата Сан Андреас. За годы своей профессиональной деятельности он зарекомендовал себя как выдающийся юрист, защищающий права и интересы своих клиентов с неуклонной решимостью. Его заслуги перед юридическим сообществом и обществом в целом были высоко оценены, и он был награждён орденом Почёта штата Сан Андреас.</p>
+      <P>Собрав богатый опыт работы в суде и на высших судебных постах, Геральт теперь предоставляет услуги в частной практике, предлагая своим клиентам стратегически продуманные и результативные решения в самых сложных юридических вопросах. Его репутация, безупречная квалификация и глубокие знания закона делают его ценным союзником для тех, кто ищет профессиональную помощь на самых разных уровнях юридического процесса.</P>
+    </div>
+  </section>
+
+  <section class="services">
+    <h2>Наши Услуги</h2>
+    <div class="services-container">
+      <div class="service">
+        <button class="service-btn" data-service="1">Составление исков</button>
+        <div class="service-info" id="service-1">
+          <h5>> 100.000$</h5>
+          <p>Мы поможем вам грамотно составить исковое заявление и выступить на суде и проконсультируем вас по вашему случаю.</p>
+        </div>
+      </div>
+
+      <div class="service">
+        <button class="service-btn" data-service="2">Консультации</button>
+        <div class="service-info" id="service-2">
+          <h5>> 50.000$</h5>
+          <p>Мы дадим ответим на любой интересующий вас вопрос по закону или юриспруденции.</p>
+        </div>
+      </div>
+
+      <div class="service">
+        <button class="service-btn" data-service="3">Выезд к клиенту</button>
+        <div class="service-info" id="service-3">
+          <h5>> 25.000$</h5>
+          <p>Мы приедем по первому звонку и отпустим вас из рук сотрудников любого департамента.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <h2>Отзывы клиентов</h2>
+      <div class="slider-container">
+        <button class="slider-btn prev">&lt;</button>
+        <div class="slider">
+          <div class="slider-wrapper">
+            <!-- Карточка отзыва -->
+            <div class="testimonial-card">
+              <h3>Casey Roberts</h3>
+              <p>
+                Отличный адвокат! Помог разобраться с очень сложным делом, всё объяснил подробно. Спасибо за профессионализм!
+              </p>
+            </div>
+            <!-- Карточка отзыва -->
+            <div class="testimonial-card">
+              <h3>Elliot Sanchez</h3>
+              <p>
+                Очень доволен работой! Решил вопрос с иском буквально за пару дней. Рекомендую!
+              </p>
+            </div>
+            <!-- Карточка отзыва -->
+            <div class="testimonial-card">
+              <h3>Toby Anderson</h3>
+              <p>
+                Лучший адвокат, с которым я работал. Настоящий профессионал и просто замечательный человек!
+              </p>
+            </div>
+          </div>
+        </div>
+        <button class="slider-btn next">&gt;</button>
+      </div>
+    </div>
+    <!-- Кнопка для открытия слайдера на мобильных -->
+    <button class="show-slider-btn" id="showSliderBtn">Показать отзывы</button>
+
+  </section>
+  
+  
+  <section class="contact">
+    <div class="container">
+      <h2>Обратная связь</h2>
+      <form id="contact-form" autocomplete="off">
+        <div class="form-group">
+          <label for="name">Ваше имя</label>
+          <input type="text" id="name" name="name" placeholder="Имя и Фамилия" required autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="phone">Ваш телефон</label>
+          <input type="tel" id="phone" name="phone" placeholder="Номер телефона"  autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="email">Ваш email</label>
+          <input type="email" id="email" name="email" placeholder="discord + @gmail.com" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="message">Ваше сообщение</label>
+          <textarea id="message" name="message" placeholder="Кратко опишите суть вашего обращения" required autocomplete="off"></textarea>
+        </div>
+        <button type="submit">Отправить</button>
+      </form>
+      
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Адвокат Geralt Grand. Все ваша права защищены, даже здесь.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
